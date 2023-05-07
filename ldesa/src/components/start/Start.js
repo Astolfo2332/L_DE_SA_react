@@ -1,10 +1,9 @@
 import "./Start.css"
-import iconoOscuro.PNG from "../logos/"
-function start() {
+function Start() {
     return(
     <div className='start'>
-        <img src= "iconoOscuro.PNG"></img>
+        <p>El inicio</p>
     </div>
     );
 }
-export default start
+export default Start
