@@ -5,8 +5,9 @@ import { Routes, Route, Outlet, Link } from "react-router-dom"
 function App() {
   return (
     <Routes>
-      <Route path="/" element={< Start />}></Route>
+        <Route path="/" element={<Start />}></Route>
     </Routes>
+    
   );
 }
 
