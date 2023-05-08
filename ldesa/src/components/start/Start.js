@@ -1,8 +1,19 @@
 import "./Start.css"
+import { useNavigate } from 'react-router-dom'
 function Start() {
+    const navigate = useNavigate();
+    function Consultar() {
+        navigate("/Consultar_Palabra")
+      }
+      function Agregar() {
+        navigate("/Agregar_Palabra")
+      }
+    const IconoOscuro=require("../logos/iconoOscuro.PNG")
     return(
     <div className='start'>
-        <p>El inicio</p>
+        <button className="start button" type="button"onClick={Agregar}>Consultar palabra</button>
+        <button className="start button" type="button" onClick={Consultar}>Agregar palabra</button>
+        <img src={IconoOscuro} alt="LdeSA" className="start image"></img>
     </div>
     );
 }

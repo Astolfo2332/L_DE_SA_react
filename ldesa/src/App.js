@@ -5,6 +5,8 @@ import Login from './components/login/login';
 import Header from './components/header/header';
 import { useEffect, useState } from 'react';
 import { AuthContext } from './contexto/authContext';
+import Agregar from "./components/agregar/agregar";
+import Consulta from "./components/consulta/consulta";
 
 function App() {
   const navigate = useNavigate()
@@ -25,6 +27,8 @@ function App() {
     <Routes>
         <Route path="/" element={<Start />}></Route>
         <Route path="/login" element={<Login setUser={setUser} />}></Route>
+        <Route path="/Consultar_Palabra" element={<Consulta  />}></Route>
+        <Route path="/Agregar_Palabra" element={<Agregar  />}></Route>
     </Routes>
     </AuthContext.Provider>
   );
