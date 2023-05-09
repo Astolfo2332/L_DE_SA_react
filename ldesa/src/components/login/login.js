@@ -28,9 +28,12 @@ function Login({ setUser }) {
         <img src={IconoOscuro} alt="LdeSA"></img>
       <div className="login-form box">
       <h1 >Qué es LdeSA?</h1> 
-      <p>Es un aplicativo que contiene un glosario sobre las diferentes señas utilizadas en diversas materias de programas ofrecidos por la Universidad de Antioquia, con el objetivo de sistematizar la lengua de señas académico colombiano para los estudiantes pertenecientes a la comunidad sordo-señante.
-
-El estudiante podrá cargar un GIF realizando la seña de esa palabra en específica, junto con una pequeña descripción de su significado. El contenido podría ser compartido por los usuarios mediante un mensaje de Whats App.</p>
+      <p>
+        Es un aplicativo que contiene un glosario sobre las diferentes señas utilizadas en diversas materias de programas ofrecidos por la Universidad de Antioquia, con el objetivo de sistematizar la lengua de señas académico colombiano para los estudiantes pertenecientes a la comunidad sordo-señante.
+      </p>
+      <p>
+        El estudiante podrá cargar un GIF realizando la seña de esa palabra en específica, junto con una pequeña descripción de su significado. El contenido podría ser compartido por los usuarios mediante este aplicativo.
+      </p>
       </div>
       <label  >Email</label>
       <input  className=" login-form input" type="email" onChange={(e) => setEmail(e.target.value)} />
