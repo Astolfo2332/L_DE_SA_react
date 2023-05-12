@@ -1,9 +1,6 @@
 import "./consulta.css"
 import { FaSearch } from 'react-icons/fa'
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
-
-const navigate = useNavigate();
 
 function Consulta(){
 
@@ -149,9 +146,7 @@ var [palabraBuscar, setPalabraBuscar] = useState('');
 function handleClick() {
   console.log(lisraPalabras);
 }
-/*function navigateLSA() {
-    navigate(`/Consultar_Palabra/${lisraPalabras.}`)
-  }*/
+
 
 function buscarPalabra() {
   var palabraBuscada = palabraBuscar;
@@ -184,7 +179,7 @@ function buscarPalabra() {
                 
                 <div className="contenedor" key ={index}>
                      
-                    <div className="ContenedorCursorPalabras" onClick={navigateLSA}> 
+                    <div className="ContenedorCursorPalabras" onClick={handleClick}> 
                     <h1> {ObjetoPalabra.Palabra}</h1>
                     <h3> <p>Carrera: {ObjetoPalabra.Carrera.Carrera}</p> <p>Materia: {ObjetoPalabra.Materia.Materia}</p> </h3>
                      </div>
