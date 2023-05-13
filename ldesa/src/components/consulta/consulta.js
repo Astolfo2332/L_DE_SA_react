@@ -1,7 +1,7 @@
 import "./consulta.css"
 import { FaSearch } from 'react-icons/fa'
-import { useContext, useEffect, useState } from 'react';
-
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 function Consulta(){
 
     var datos =
@@ -142,44 +142,53 @@ function Consulta(){
 var [lisraPalabras, setLisraPalabras] = useState(datos);
 var [palabraBuscar, setPalabraBuscar] = useState('');
 
+const navigate = useNavigate()
 
 function handleClick() {
   console.log(lisraPalabras);
 }
-
+function volver_menu(){
+  navigate("/")  
+}
 
 function buscarPalabra() {
   var palabraBuscada = palabraBuscar;
   var palabrasEncontradas = lisraPalabras.filter(
     (objetoPalabra) => objetoPalabra.Palabra === palabraBuscada
   );
-  console.log(palabrasEncontradas[0].Palabra)
-
-  var na = (lisraPalabras.filter((objetoPalabra) => objetoPalabra.Palabra !== palabrasEncontradas[0].Palabra));
+  
+  if (palabrasEncontradas.length > 0) {
+  var na = lisraPalabras.filter((objetoPalabra) => objetoPalabra.Palabra !== palabrasEncontradas[0].Palabra );
 
   const actualizacionLista = [palabrasEncontradas[0], ...na];
   setLisraPalabras(actualizacionLista);
+
+  }
+  else {
+    const nope={Palabra:"No se encuentra",Materia:"No existe",Carrera:"No lo intentes"}
+  setLisraPalabras([nope])
+}
 }
   
     
 
     return(
         <div className='consulta'>
-            <button className="consulta button" type="button"onClick={handleClick}>validar</button> 
+            <button className="consulta button" type="button" onClick={handleClick}>validar</button> 
             <div className="icono">
                     <input type="text" onChange={(e) => setPalabraBuscar(e.target.value)}/>
                     <div className="button" onClick={buscarPalabra} >
                      <FaSearch /> Bucar 
                      </div>
         </div>
-            <span className="volver">volver menu principal</span>
+            <button className="button" type="button" onClick={volver_menu}>volver menu principal</button>
             <div>
                 {
                 lisraPalabras.map((ObjetoPalabra,index)=>(
                 
                 <div className="contenedor" key ={index}>
                      
-                    <div className="ContenedorCursorPalabras" onClick={handleClick}> 
+                    <div className="ContenedorCursorPalabras" type="button" onClick={handleClick}> 
                     <h1> {ObjetoPalabra.Palabra}</h1>
                     <h3> <p>Carrera: {ObjetoPalabra.Carrera.Carrera}</p> <p>Materia: {ObjetoPalabra.Materia.Materia}</p> </h3>
                      </div>
