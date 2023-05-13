@@ -13,19 +13,22 @@
   border-radius: 10px;
   text-align: center;
   font-weight: bold;
+  cursor: pointer;
 }
-   
+.contenedorTotal{
+  width: 80%;
+}
     .ContenedorCursorPalabras {
         padding: 16px;
         cursor: pointer;
-        width: 100%;
+        text-align: center;
       }
 .contenedor{
   align-items: center;
   background:#0E7774;
   margin:20px;
   border-radius:10px ;
-  width: 200%;
+
 
 }
       .button-defaults{
@@ -58,8 +61,10 @@
       }
 
       .info-box {
+        width: 50%;
+        height: 50%;
         position: fixed;
-        top: 50%;
+        top: 30%;
         left: 50%;
         transform: translate(-50%, -50%);
         padding: 10px;
@@ -68,4 +73,9 @@
         border-radius: 5px;
         z-index: 999;
       }
-      
+iframe {
+  align-items: center;
+  width:100%;
+  height: 70%;;
+
+}

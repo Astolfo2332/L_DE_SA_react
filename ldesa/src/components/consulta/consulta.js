@@ -144,9 +144,7 @@ var [palabraBuscar, setPalabraBuscar] = useState('');
 const [showError, setShowError] = useState(false);
 const navigate = useNavigate()
 
-function handleClick() {
-  console.log(lisraPalabras);
-}
+
 function volver_menu(){
   navigate("/")  
 }
@@ -169,7 +167,7 @@ function buscarPalabra() {
   
   if (palabrasEncontradas) {
   setInfoPalabra(palabrasEncontradas)
-
+    console.log(palabrasEncontradas.Palabra.Palabra)
   }
   else {
     setShowError(true)
@@ -199,7 +197,7 @@ return (
     <div>
       {showError && <ErrorPopup />}
     </div>
-    <div>
+    <div className="contenedorTotal">
       {lisraPalabras.map((ObjetoPalabra,index)=>(
         <div className="contenedor" key ={index}>
           <div className="ContenedorCursorPalabras" type="button" onClick={() => {setPalabraBuscar(ObjetoPalabra.Palabra); buscarPalabra();}}> 
@@ -216,7 +214,7 @@ return (
         <p>Materia: {infoPalabra.Materia.Materia}</p>
         <p>Descripcion: {infoPalabra.Descripcion}</p>
     
-        <iframe title="Video" width="560" height="315" src={embedYouTubeUrl( infoPalabra.video)} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe title="Video" src={embedYouTubeUrl( infoPalabra.video)} FrameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
         <button className="button" onClick={() => setInfoPalabra(null)}>Cerrar</button>
       </div>
     )}
