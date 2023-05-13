@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { AuthContext } from './contexto/authContext';
 import Agregar from "./components/agregar/agregar";
 import Consulta from "./components/consulta/consulta";
+import PalabraDetails from "./components/PalabraDetails/PalabraDetails"
 
 function App() {
   const navigate = useNavigate()
@@ -21,6 +22,7 @@ function App() {
   }, [user])
 
 
+
   return (
     <AuthContext.Provider value={user}>
       <Header setUser={setUser}></Header>
@@ -29,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login setUser={setUser} />}></Route>
         <Route path="/Consultar_Palabra" element={<Consulta  />}></Route>
         <Route path="/Agregar_Palabra" element={<Agregar  />}></Route>
+        <Route path="Consultar_Palabra/:palabra_id" element={<PalabraDetails />}></Route>
     </Routes>
     </AuthContext.Provider>
   );

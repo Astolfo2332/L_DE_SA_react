@@ -12,7 +12,7 @@ function Consulta(){
             _id: "642d9be6a0c5d37bdf42eb8d",
           Descripcion: 'descripcion del barroco ',
           Palabra: 'Barroco',
-          video: 'https://www.youtube.com/watch?v=AEiRa5xZaZw&list=PLyvsggKtwbLVva0XXvoqx91iaLmhgeNy7',
+          video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
           Materia: {
             _id:"642d9330a0c5d37bdf42eb5b",
             Materia: 'Historia del Arte',
@@ -138,10 +138,10 @@ function Consulta(){
 
 
 
-
+const [infoPalabra, setInfoPalabra] = useState(null);
 var [lisraPalabras, setLisraPalabras] = useState(datos);
 var [palabraBuscar, setPalabraBuscar] = useState('');
-
+const [showError, setShowError] = useState(false);
 const navigate = useNavigate()
 
 function handleClick() {
@@ -150,54 +150,78 @@ function handleClick() {
 function volver_menu(){
   navigate("/")  
 }
+function embedYouTubeUrl(url) {
+  var videoId = url.split('v=')[1];
+  const ampersandPosition = videoId.indexOf('&');
+  if (ampersandPosition !== -1) {
+    videoId = videoId.substring(0, ampersandPosition);
+  }
+  return `https://www.youtube.com/embed/${videoId}`;
+}
+
 
 function buscarPalabra() {
   var palabraBuscada = palabraBuscar;
-  var palabrasEncontradas = lisraPalabras.filter(
-    (objetoPalabra) => objetoPalabra.Palabra === palabraBuscada
+  
+  var palabrasEncontradas = lisraPalabras.find(
+    (objetoPalabra) => objetoPalabra.Palabra.toLocaleLowerCase() === palabraBuscada.toLocaleLowerCase()
   );
   
-  if (palabrasEncontradas.length > 0) {
-  var na = lisraPalabras.filter((objetoPalabra) => objetoPalabra.Palabra !== palabrasEncontradas[0].Palabra );
-
-  const actualizacionLista = [palabrasEncontradas[0], ...na];
-  setLisraPalabras(actualizacionLista);
+  if (palabrasEncontradas) {
+  setInfoPalabra(palabrasEncontradas)
 
   }
   else {
-    const nope={Palabra:"No se encuentra",Materia:"No existe",Carrera:"No lo intentes"}
-  setLisraPalabras([nope])
+    setShowError(true)
 }
 }
-  
-    
 
-    return(
-        <div className='consulta'>
-            <button className="consulta button" type="button" onClick={handleClick}>validar</button> 
-            <div className="icono">
-                    <input type="text" onChange={(e) => setPalabraBuscar(e.target.value)}/>
-                    <div className="button" onClick={buscarPalabra} >
-                     <FaSearch /> Bucar 
-                     </div>
+function ErrorPopup() {
+  return (
+    <div className="error-popup">
+      <p>No se encontraron palabras que coincidan con la búsqueda.</p>
+      <button className="button" type="button" onClick={()=>setShowError(false)}>OK</button>
+    </div>
+  );
+} 
+
+
+
+return (
+  <div className='consulta'>
+    <button className="button" type="button" onClick={volver_menu}>volver menu principal</button>
+    <div className="icono">
+      <input type="text" onChange={(e) => setPalabraBuscar(e.target.value)} onKeyDown={(e) => {if (e.key=="Enter") {buscarPalabra()}}} />
+      <div className="button"  type="button" onClick={buscarPalabra} >
+        <FaSearch /> Buscar 
+      </div>
+    </div>
+    <div>
+      {showError && <ErrorPopup />}
+    </div>
+    <div>
+      {lisraPalabras.map((ObjetoPalabra,index)=>(
+        <div className="contenedor" key ={index}>
+          <div className="ContenedorCursorPalabras" type="button" onClick={() => {setPalabraBuscar(ObjetoPalabra.Palabra); buscarPalabra();}}> 
+            <h1> {ObjetoPalabra.Palabra}</h1>
+            <h3> <p>Carrera: {ObjetoPalabra.Carrera.Carrera}</p> <p>Materia: {ObjetoPalabra.Materia.Materia}</p> </h3>
+          </div>
         </div>
-            <button className="button" type="button" onClick={volver_menu}>volver menu principal</button>
-            <div>
-                {
-                lisraPalabras.map((ObjetoPalabra,index)=>(
-                
-                <div className="contenedor" key ={index}>
-                     
-                    <div className="ContenedorCursorPalabras" type="button" onClick={handleClick}> 
-                    <h1> {ObjetoPalabra.Palabra}</h1>
-                    <h3> <p>Carrera: {ObjetoPalabra.Carrera.Carrera}</p> <p>Materia: {ObjetoPalabra.Materia.Materia}</p> </h3>
-                     </div>
-
-                </div>
-                     
-                ))}
-            </div>
-            
-        </div>)}
+      ))}
+    </div>
+    {infoPalabra && (
+      <div className="info-box">
+        <h1>{infoPalabra.Palabra}</h1>
+        <p>Carrera: {infoPalabra.Carrera.Carrera}</p>
+        <p>Materia: {infoPalabra.Materia.Materia}</p>
+        <p>Descripcion: {infoPalabra.Descripcion}</p>
+    
+        <iframe title="Video" width="560" height="315" src={embedYouTubeUrl( infoPalabra.video)} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <button className="button" onClick={() => setInfoPalabra(null)}>Cerrar</button>
+      </div>
+    )}
+  </div>
+);
+    }
 
 export default Consulta 
