@@ -114,29 +114,6 @@
         "Correo": "camilo.j@gmail.com",
         "Rol": "Estudiante"
       }
-    },
-    {
-      "id": "b7d6479b-e5e9-4bd2-b291-eaa3699cce7b",
-      "Descripcion": "pene",
-      "Palabra": "pene",
-      "video": "https://youtu.be/R09hK-srORM?t=67",
-      "Materia": {
-        "id": "9d8a5d9c-429c-4e9c-a7b8-bbeacbd3fe62",
-        "Materia": "pene",
-        "Palabras": []
-      },
-      "Carrera": {
-        "id": "468d74b2-6a7d-45ff-ba69-6c00bfedf4ea",
-        "Carrera": "pene",
-        "Materias": []
-      },
-      "Autor": {
-        "id": "d84fa207-fcce-434f-ae65-7907dc840062",
-        "Nombre": "Carlos",
-        "Apellido": "Velasquez",
-        "Correo": "carlos_velasquez@gmail.com",
-        "Rol": "Estudiante"
-      }
     }
   ]
 }
