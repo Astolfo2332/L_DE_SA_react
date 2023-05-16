@@ -2,6 +2,8 @@ import "./consulta.css"
 import { FaSearch } from 'react-icons/fa'
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
+import Palabra from "../palabra/palabra.js";
+import {embedYouTubeUrl} from "../utils/yt"
 
 
 function Consulta(){
@@ -24,20 +26,9 @@ function volver_menu(){
   navigate("/")  
 }
 
-function embedYouTubeUrl(url) {
-  const regExp1 = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/;
-  const regExp2 = /[?&]list=([^#&?]+)/;
-  const match1 = url.match(regExp1);
-  const match2 = url.match(regExp2);
-  const videoId = match1 && match1[2].length === 11 ? match1[2] : null;
-  const playlistId = match2 ? match2[1] : null;
-  if (videoId) {
-    return `https://www.youtube.com/embed/${videoId}${playlistId ? `?list=${playlistId}` : ''}`;
-  }
-}
+
 
 async function buscarPalabra() {
-  setInfoPalabra(null)
   try{
   const respuesta = await fetch('http://localhost:3000/Palabras');
   const data = await respuesta.json();
@@ -81,14 +72,8 @@ return (
       {showError && <ErrorPopup />}
     </div>
     <div className="contenedorTotal">
-      {lisraPalabras.map((ObjetoPalabra,index)=>(
-        <div className="contenedor" key ={index}>
-          <div className="ContenedorCursorPalabras"> 
-            <h1> {ObjetoPalabra.Palabra}</h1>
-            <h3> <p>Carrera: {ObjetoPalabra.Carrera.Carrera}</p> <p>Materia: {ObjetoPalabra.Materia.Materia}</p> </h3>
-          </div>
-        </div>
-      ))}
+      {lisraPalabras.map((ObjetoPalabra) => (<Palabra key={ObjetoPalabra.id} Palabra={ObjetoPalabra} />))}
+        
     </div>
     {infoPalabra && (
       <div className="info-box">

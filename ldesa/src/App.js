@@ -12,7 +12,6 @@ import PalabraDetails from "./components/PalabraDetails/PalabraDetails"
 function App() {
   const navigate = useNavigate()
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-
   useEffect(() => {
     if (!user) {
       navigate('/login')

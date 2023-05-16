@@ -84,7 +84,6 @@ function Agregar(){
                 objetoPalabra.Carrera.Carrera.toLocaleLowerCase() === agregarCarrera.toLocaleLowerCase() && 
                 objetoPalabra.Materia.Materia.toLocaleLowerCase() === agregarMateria.toLocaleLowerCase()
               );
-              console.log(datosPalabra)
               if (!verificadorPalabra){
                 NuevaPalabra()
             }

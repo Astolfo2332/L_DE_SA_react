@@ -18,18 +18,7 @@
 .contenedorTotal{
   width: 80%;
 }
-    .ContenedorCursorPalabras {
-        padding: 16px;
-        text-align: center;
-      }
-.contenedor{
-  align-items: center;
-  background:#0E7774;
-  margin:20px;
-  border-radius:10px ;
 
-
-}
       .button-defaults{
         padding: 0;
         margin: 0;
