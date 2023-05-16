@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom"
 function Consulta(){
 
 const [infoPalabra, setInfoPalabra] = useState(null);
-var [lisraPalabras, setLisraPalabras] = useState([]);
-var [palabraBuscar, setPalabraBuscar] = useState('');
+const [lisraPalabras, setLisraPalabras] = useState([]);
+const [palabraBuscar, setPalabraBuscar] = useState('');
 const [showError, setShowError] = useState(false);
 const navigate = useNavigate()
 
@@ -23,30 +23,31 @@ useEffect(() => {
 function volver_menu(){
   navigate("/")  
 }
+
 function embedYouTubeUrl(url) {
-  var videoId = url.split('v=')[1];
-  const donde = videoId.indexOf('&');
-  if (donde !== -1) {
-    videoId = videoId.substring(0, donde);
+  const regExp1 = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/;
+  const regExp2 = /[?&]list=([^#&?]+)/;
+  const match1 = url.match(regExp1);
+  const match2 = url.match(regExp2);
+  const videoId = match1 && match1[2].length === 11 ? match1[2] : null;
+  const playlistId = match2 ? match2[1] : null;
+  if (videoId) {
+    return `https://www.youtube.com/embed/${videoId}${playlistId ? `?list=${playlistId}` : ''}`;
   }
-  return `https://www.youtube.com/embed/${videoId}`;
 }
-
-
 
 async function buscarPalabra() {
   setInfoPalabra(null)
-  var palabraBuscada = palabraBuscar;
   try{
   const respuesta = await fetch('http://localhost:3000/Palabras');
   const data = await respuesta.json();
   var palabrasEncontradas = data.find(
-    (objetoPalabra) => objetoPalabra.Palabra.toLocaleLowerCase() === palabraBuscada.toLocaleLowerCase()
+    (objetoPalabra) => objetoPalabra.Palabra.toLocaleLowerCase() === palabraBuscar.toLocaleLowerCase()
   );  
   if (palabrasEncontradas) {
   setInfoPalabra(palabrasEncontradas)
   setPalabraBuscar("")
-  }
+  } 
   else {
     setShowError(true)
     setPalabraBuscar("")
@@ -57,6 +58,7 @@ async function buscarPalabra() {
 }
 const handleInput = (event) => {
   setPalabraBuscar(event.target.value);
+  console.log(palabraBuscar)
 };
 useEffect(() => {
 }, [palabraBuscar]);
@@ -88,7 +90,7 @@ return (
     <div className="contenedorTotal">
       {lisraPalabras.map((ObjetoPalabra,index)=>(
         <div className="contenedor" key ={index}>
-          <div className="ContenedorCursorPalabras" type="button" onClick={buscarPalabra}> 
+          <div className="ContenedorCursorPalabras" type="button" onClick={() => { setPalabraBuscar(ObjetoPalabra.Palabra); buscarPalabra(); }}> 
             <h1> {ObjetoPalabra.Palabra}</h1>
             <h3> <p>Carrera: {ObjetoPalabra.Carrera.Carrera}</p> <p>Materia: {ObjetoPalabra.Materia.Materia}</p> </h3>
           </div>

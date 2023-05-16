@@ -5,7 +5,18 @@ import { uuidv4 } from '../utils/uuid'
 
 
 
+
 function Agregar(){
+
+  const [agregarCarrera, setAgregarCarrera] = useState('')
+  const [datosPalabra, setDatosPalabra] = useState([]);
+  const [agregarMateria, setAgregarMateria] = useState('')
+  const [agregarPalabra, setAgregarPalabra] = useState('')
+  const [agregarDescripcion, setAgregarDescripcion] = useState('')
+  const [agregarVideo,setAgregarVideo]=useState('')
+  const [showError,setShowError]=useState(false)
+  const [errorMessage, setErrorMessage] = useState("");
+
     useEffect(() => {
         fetch('http://localhost:3000/Palabras')
           .then((response) => response.json())
@@ -13,99 +24,99 @@ function Agregar(){
             setDatosPalabra(data)
           })
       }, [])
-    var [agregarCarrera, setAgregarCarrera] = useState('');
-    var [datosPalabra, setDatosPalabra] = useState([]);
-    var [agregarMateria, setAgregarMateria] = useState('');
-    var [agregarPalabra, setAgregarPalabra] = useState('');
-    var [agregarDescripcion, setAgregarDescripcion] = useState('');
-    var[agregarVideo,setAgregarVideo]=useState('');
-    var[showError,setShowError]=useState(false);
+
     
 
     const navigate = useNavigate()
     function volver_menu(){
         navigate("/")  
       }
+  function yt(url) {
+    var pattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=)|youtu\.be\/)([-a-zA-Z0-9_]+)/;
+    return pattern.test(url);
 
+    }
       function NuevaPalabra() {
         const nuevaPalbara = {
-            _id: uuidv4(),
+            id: uuidv4(),
             Descripcion: agregarDescripcion,
             Palabra: agregarPalabra,
             video: agregarVideo,
             Materia: {
-              _id:uuidv4(),
+              id:uuidv4(),
               Materia: agregarMateria,
               Palabras: [  ]
             },
             Carrera: {
-              _id: uuidv4(),
+              id: uuidv4(),
               Carrera: agregarCarrera,
               Materias: [
               ]
             },
             Autor: {
-              _id: "642d8ffea0c5d37bdf42eb47",
+              id: uuidv4(),
               Nombre: "Carlos",
               Apellido: "Velasquez",
               Correo: "carlos_velasquez@gmail.com",
               Rol: "Estudiante"
-            }
+            },
         }
         fetch('http://localhost:3000/Palabras', {
             method: "POST",
             headers: {"Content-Type": "application/json",},
-            body: JSON.stringify(nuevaPalbara),}).then(() => {setDatosPalabra([nuevaPalbara, ...datosPalabra])})}  
-    
-    
+            body: JSON.stringify(nuevaPalbara),
+          }).then(() => {
+              setDatosPalabra([nuevaPalbara, ...datosPalabra])
+            })
+          }  
     
       function guardarPalabra() {
 
-
-        var palabraGuardad = agregarPalabra;
-        var MateriaGuardad = agregarMateria;
-        var CarreraGuardad = agregarCarrera;
-        var DescripcionGuardad = agregarDescripcion;
-        var VideoGuardad = agregarVideo;    
-
-        if (palabraGuardad !== "" &&  MateriaGuardad !== "" &&  CarreraGuardad !== "" &&  DescripcionGuardad !== ""&&  VideoGuardad !== ""){
-            var verificadorPalabra = datosPalabra.find(
-                (objetoPalabra) => objetoPalabra.Palabra.toLocaleLowerCase() === palabraGuardad.toLocaleLowerCase() && objetoPalabra.Carrera.Carrera.toLocaleLowerCase() === CarreraGuardad.toLocaleLowerCase() && objetoPalabra.Materia.Materia.toLocaleLowerCase() === MateriaGuardad.toLocaleLowerCase()
+        if (agregarPalabra !== "" &&
+          agregarMateria !== "" &&
+            agregarCarrera !== "" && 
+             agregarDescripcion !== ""&&  
+             agregarVideo !== ""){
+        if (yt(agregarVideo)){
+            const verificadorPalabra = datosPalabra.find(
+                (objetoPalabra) => 
+                objetoPalabra.Palabra.toLocaleLowerCase() === agregarPalabra.toLocaleLowerCase() && 
+                objetoPalabra.Carrera.Carrera.toLocaleLowerCase() === agregarCarrera.toLocaleLowerCase() && 
+                objetoPalabra.Materia.Materia.toLocaleLowerCase() === agregarMateria.toLocaleLowerCase()
               );
               console.log(datosPalabra)
               if (!verificadorPalabra){
                 NuevaPalabra()
             }
             else{
-                setShowError(true)
+                displayError("La palabra ya existe en la base de datos")
             }      
+          }
+          else{
+            displayError("Ingrese una url valida")
+        }
 }
 else{
-    setShowError(true)}
+    displayError("Por favor rellene todos los campos")
+  }
 }
-    
+
+function displayError(mensaje) {
+  setErrorMessage(mensaje);
+  setShowError(true);
+}
 
       function ErrorPopup(){
         return (
               <div className="error-popup">
-                <p>Para guardar la palabra es necesario llenar todas las casillas.</p>
+                <p>{errorMessage}</p>
                 <button className="button" type="button" onClick={()=>setShowError(false)}>OK</button>
               </div>
             );
           } 
 
-
-
-          function ErrorPopup2(){
-            return (
-                  <div className="error-popup">
-                    <p>la palabra ingresada ya se encuentra en este aplicativo.</p>
-                    <button className="button" type="button" onClick={()=>setShowError(false)}>OK</button>
-                  </div>
-                );
-              } 
     return(
-        <div>
+        <div className="form">
             <button className="button" type="button" onClick={volver_menu}>volver menu principal</button>
          <div className="iconos">
         <p> Agregar Carrera: <input type="text" onChange={(e) => setAgregarCarrera(e.target.value)} /></p>
@@ -119,7 +130,6 @@ else{
         
         </div>
         <div>{showError && <ErrorPopup/>}</div>
-        <div>{showError && <ErrorPopup2/>}</div>
         </div>
     )
 
