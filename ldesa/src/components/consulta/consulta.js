@@ -56,13 +56,6 @@ async function buscarPalabra() {
     console.log("Esperando")
   }
 }
-const handleInput = (event) => {
-  setPalabraBuscar(event.target.value);
-  console.log(palabraBuscar)
-};
-useEffect(() => {
-}, [palabraBuscar]);
-
 
 function ErrorPopup() {
   return (
@@ -79,7 +72,7 @@ return (
   <div className='consulta'>
     <button className="button" type="button" onClick={volver_menu}>volver menu principal</button>
     <div className="icono">
-      <input type="text" value={palabraBuscar} onChange={handleInput} onKeyDown={(e) => {if (e.key=="Enter") {buscarPalabra()}}} />
+      <input type="text" value={palabraBuscar} onChange={(e) => setPalabraBuscar(e.target.value)} onKeyDown={(e) => {if (e.key=="Enter") {buscarPalabra()}}} />
       <button className="button"  type="button" onClick={buscarPalabra} > 
         <FaSearch /> Buscar 
      </button>
@@ -90,7 +83,7 @@ return (
     <div className="contenedorTotal">
       {lisraPalabras.map((ObjetoPalabra,index)=>(
         <div className="contenedor" key ={index}>
-          <div className="ContenedorCursorPalabras" type="button" onClick={() => { setPalabraBuscar(ObjetoPalabra.Palabra); buscarPalabra(); }}> 
+          <div className="ContenedorCursorPalabras"> 
             <h1> {ObjetoPalabra.Palabra}</h1>
             <h3> <p>Carrera: {ObjetoPalabra.Carrera.Carrera}</p> <p>Materia: {ObjetoPalabra.Materia.Materia}</p> </h3>
           </div>
